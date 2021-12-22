@@ -28,6 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 + " IDTRIP integer primary key autoincrement not null, "
                 + " START text not null,"
                 + " FINISH text not null, "
+                + " Data text not null,"
                 + " CAPACITY integer not null,"
                 + " PRICE integer not null);"
         );

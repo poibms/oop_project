@@ -12,7 +12,7 @@
         android:layout_height="191dp"
         android:layout_marginStart="116dp"
         android:layout_marginTop="45dp"
-        android:src="@drawable/icon"
+        android:src="@drawable/img"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -99,7 +99,6 @@
         android:backgroundTint="@color/main_blue"
         android:minWidth="200dp"
         android:text="Sign Up"
-        android:onClick="signUp_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordLayout" />
 
@@ -113,7 +112,6 @@
         android:text="Already have an account? Sign In"
         android:background="#0000"
         android:textColor="@color/main_blue"
-        android:onClick="signinActivity_btn"
         android:backgroundTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -62,7 +62,13 @@ public class Signup extends AppCompatActivity {
                             clearFields();
                             Toast.makeText(this, "User was successfully sign up ", Toast.LENGTH_SHORT).show();
                         }
+                    } else {
+                        Toast.makeText(this, "",
+                                Toast.LENGTH_SHORT).show();
                     }
+                } else {
+                    Toast.makeText(this, "User with this such email is already registered",
+                            Toast.LENGTH_SHORT).show();
                 }
             } catch (SQLiteConstraintException e) {
                 Toast.makeText(this, "User with this such email is already registered",

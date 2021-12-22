@@ -17,21 +17,21 @@ public class UserDB {
 
     public static long signUp(SQLiteDatabase db, User user) {
 
-        db.execSQL("drop trigger if exists trgr_SIGNUP_USR");
-
-        String createTrigger =
-                "create trigger if not exists trgr_SIGNUP_USR before insert on " + USER_TABLE
-                        + " begin"
-                        + " select case"
-                        + " (select EMAIL"
-                        + " from " + USER_TABLE
-                        + " where EMAIL = " + user.getEmail() + ")"
-                        + " then"
-                        + " raise(abort, 'there must be less than 6 students in the group')"
-                        + " end;"
-                        + " end;";
-
-        db.execSQL(createTrigger);
+//        db.execSQL("drop trigger if exists trgr_SIGNUP_USR");
+//
+//        String createTrigger =
+//                "create trigger if not exists trgr_SIGNUP_USR before insert on " + USER_TABLE
+//                        + " begin"
+//                        + " select case"
+//                        + " (select EMAIL"
+//                        + " from " + USER_TABLE
+//                        + " where EMAIL = " + user.getEmail() + ")"
+//                        + " then"
+//                        + " raise(abort, 'there must be less than 6 students in the group')"
+//                        + " end;"
+//                        + " end;";
+//
+//        db.execSQL(createTrigger);
 
         ContentValues values = new ContentValues();
         values.put("LOGIN", user.getLogin());
