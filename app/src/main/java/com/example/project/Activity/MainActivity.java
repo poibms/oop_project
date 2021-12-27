@@ -4,23 +4,43 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.app.DatePickerDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.project.Fragments.AccountFragment;
 import com.example.project.Fragments.AddFragment;
 import com.example.project.Fragments.SearchFragment;
+import com.example.project.Helper.DateTimeHelper;
 import com.example.project.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity {
     public BottomNavigationView navigationView;
+
+//    SharedPreferences sharedPreferences;
+//    private static final String SHARED_PREF_NAME = "userInfo";
+//    private static final String KEY_ID = "userId";
+//    private static final String KEY_EMAIL = "LOGIN";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         navigationView = findViewById(R.id.bottom_navigation);
+
+//        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+
         navigationView.setOnNavigationItemSelectedListener(navListener);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
@@ -48,5 +68,8 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+
+
 
 }

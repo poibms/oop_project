@@ -48,23 +48,19 @@ public class UserDB {
         return salt;
     }
 
-    public static void signIn(SQLiteDatabase db, String login,String password, Context ctx ) {
+    public static int signIn(SQLiteDatabase db, String email,String password, Context ctx ) {
 
-        Cursor query = db.rawQuery("select * from " + USER_TABLE + " where " + " LOGIN " + " LIKE \'" + login + "\';", null);
+        Cursor query = db.rawQuery("select * from " + USER_TABLE + " where " + " EMAIL = '" + email + "';", null);
         if( query.moveToFirst() && query.getCount() != 0) {
             int id = query.getInt(0);
             String pass = query.getString(3);
             if(pass.equals(password)) {
-                Intent intent = new Intent(ctx, MainActivity.class);
-                intent.putExtra("id_user", id);
-                ctx.startActivity(intent);
-            } else {
-                Toast.makeText(ctx, "Wrong Password", Toast.LENGTH_LONG).show();
+//                Intent intent = new Intent(ctx, MainActivity.class);
+//                ctx.startActivity(intent);
+                return id;
             }
-        } else {
-            Toast.makeText(ctx, "Wrong user", Toast.LENGTH_LONG).show();
         }
-
+        return 0;
     }
 
     
