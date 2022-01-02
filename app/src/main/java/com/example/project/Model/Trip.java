@@ -1,6 +1,8 @@
 package com.example.project.Model;
 
-public class Trip {
+import java.io.Serializable;
+
+public class Trip implements Serializable {
     private int id;
     private String start, finish, startDate, startTime, transportType;
     private int capacity, price;
@@ -24,7 +26,7 @@ public class Trip {
     public String getStartDate() {return startDate;}
     public String getStartTime() {return startTime;}
     public String getTransportType() {return transportType;}
-        public int getCapacity() {return capacity;}
+    public int getCapacity() {return capacity;}
     public int getPrice() {return price;}
 
     //set

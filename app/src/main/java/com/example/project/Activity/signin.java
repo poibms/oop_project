@@ -61,7 +61,7 @@ public class signin extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             bindingValues();
             checkInputs(email,password);
-            int check = UserDB.signIn(db, email,password, this);
+            int check = UserDB.signIn(db, email,password);
             if(check !=0){
                 editor.putInt(KEY_ID, check);
                 editor.putString(KEY_EMAIL, email);

@@ -3,14 +3,13 @@ package com.example.project.Fragments;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,19 +21,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.project.Activity.SelectedTripActivity;
 import com.example.project.Database.DBHelper;
-import com.example.project.Database.TripDB;
 import com.example.project.Helper.DateTimeHelper;
 import com.example.project.Helper.SearchHelper;
-import com.example.project.Helper.SpinnerSetterResult;
 import com.example.project.Model.Trip;
 import com.example.project.R;
 
-import org.w3c.dom.Text;
-
-import java.time.LocalDate;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class SearchFragment extends Fragment {
 
@@ -56,11 +53,7 @@ public class SearchFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_search, container, false);
 
     }
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        db.close();
-    }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -90,20 +83,20 @@ public class SearchFragment extends Fragment {
     private void setDateListeners() {
         startDateEdit.setInputType(InputType.TYPE_NULL);
 
-        DatePickerDialog.OnDateSetListener d = (view, year, monthOfYear, dayOfMonth) ->
+        DatePickerDialog.OnDateSetListener datePiker = (view, year, monthOfYear, dayOfMonth) ->
                 startDateEdit.setText(DateTimeHelper.getGeneralDateFormat(year, monthOfYear + 1, dayOfMonth));
 
-        DatePickerDialog birthdayDialog = new DatePickerDialog(getContext(), d,
+        DatePickerDialog startDate = new DatePickerDialog(getContext(), datePiker,
                 date.get(Calendar.YEAR),
                 date.get(Calendar.MONTH),
                 date.get(Calendar.DAY_OF_MONTH));
 
         startDateEdit.setOnClickListener(view -> {
-            birthdayDialog.show();
+            startDate.show();
         });
         startDateEdit.setOnFocusChangeListener((view, hasFocus) -> {
             if(hasFocus) {
-                birthdayDialog.show();
+                startDate.show();
             }
         });
     }
@@ -119,15 +112,16 @@ public class SearchFragment extends Fragment {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bindingValues();
+                try {
+                    bindingValues();
 
-                SpinnerSetterResult<Trip> tripsResult =
-                        SearchHelper.getTrips(getContext(), from, to, startDate, capacity);
-                customListAdapter.updateStudentsList(tripsResult.getList());
-
+                    ArrayList<Trip> tripsResult =
+                            SearchHelper.getTrips(db, from, to, startDate, capacity);
+                    customListAdapter.updateStudentsList(tripsResult);
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "Check your input data", Toast.LENGTH_SHORT).show();
+                }
             }
-
-
         });
     }
 
@@ -136,12 +130,9 @@ public class SearchFragment extends Fragment {
         private ArrayList<Trip> trips;
         private Context context;
 
-
-
         public CustomListAdapter(Context context, ArrayList<Trip> trips) {
             this.context = context;
             this.trips = trips;
-
         }
 
         @Override
@@ -177,11 +168,11 @@ public class SearchFragment extends Fragment {
             capacity.setText(trips.get(pos).getCapacity() + "");
             price.setText(trips.get(pos).getPrice() + "");
 
-//            view.setOnClickListener(v -> {
-//                Intent intent = new Intent(getContext(), SelectedStudentActivity.class);
-////                intent.putExtra("Trip", trips.get(pos));
-//                startActivity(intent);
-//            });
+            view.setOnClickListener(v -> {
+                Intent intent = new Intent(getContext(), SelectedTripActivity.class);
+                intent.putExtra("Trip", trips.get(pos));
+                startActivity(intent);
+            });
 
             return view;
         }

@@ -11,9 +11,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "TravellerProject";
     private static final String USER_TABLE = "USER";
     private static final String TRIP_TABLE = "TRIP";
-    private static final String ORDERTRIP_TABLE = "ORDERTRIP_TABLE";
+    private static final String ORDERTICKETS_TABLE = "ORDERTICETS_TABLE";
 
-    private static DBHelper instance = null;
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA);
@@ -39,20 +38,31 @@ public class DBHelper extends SQLiteOpenHelper {
                 + " PRICE integer not null);"
         );
 
-        db.execSQL("create table " + ORDERTRIP_TABLE + " (                    "
+        db.execSQL("create table " + ORDERTICKETS_TABLE + " (                    "
                 + "IDORDERTICKET integer primary key autoincrement not null,"
+                + "COUNTICKETS integer not null, "
+                + "ORDEREDPRICE integer not null,"
+                + "IDUSER integer not null, "
+                + "IDTRIP integer not null, "
                 + "foreign key (IDUSER) references " + USER_TABLE + "(IDUSER)  "
                 + " on delete cascade on update cascade,                            "
                 + "foreign key (IDTRIP) references " + TRIP_TABLE + "(IDTRIP) "
-                + " on delete cascade on update cascade);"
+                + " on delete cascade on update cascade); "
+
         );
+    }
+
+
+    @Override
+    public void onConfigure(SQLiteDatabase db) {
+        db.setForeignKeyConstraintsEnabled(true);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if exists " + USER_TABLE);
         db.execSQL("drop table if exists " + TRIP_TABLE);
-        db.execSQL("drop table if exists " + ORDERTRIP_TABLE);
+        db.execSQL("drop table if exists " + ORDERTICKETS_TABLE);
         onCreate(db);
     }
 }

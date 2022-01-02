@@ -132,6 +132,7 @@
             android:id="@+id/priceEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number"
             android:hint="Price" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -150,6 +151,7 @@
             android:id="@+id/capacityEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number"
             android:hint="Capacity" />
     </com.google.android.material.textfield.TextInputLayout>
 

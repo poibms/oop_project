@@ -58,20 +58,21 @@ public class Signup extends AppCompatActivity {
                     if (password.length() >= 4 && password.length() <= 15) {
                         User user = new User(login, email, password);
                         if(UserDB.signUp(db, user) != -1) {
-                            startActivity(new Intent(this, MainActivity.class));
+//                            startActivity(new Intent(this, MainActivity.class));
                             clearFields();
+                            finish();
                             Toast.makeText(this, "User was successfully sign up ", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(this, "",
+                        Toast.makeText(this, "password length must be between 4 and 15 characters",
                                 Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(this, "User with this such email is already registered",
+                    Toast.makeText(this, "login length must be between 4 and 15 characters",
                             Toast.LENGTH_SHORT).show();
                 }
             } catch (SQLiteConstraintException e) {
-                Toast.makeText(this, "User with this such email is already registered",
+                Toast.makeText(this, "sql error",
                         Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Toast.makeText(this, "Check your input values",
@@ -79,7 +80,8 @@ public class Signup extends AppCompatActivity {
             }
         });
         signInActBtn.setOnClickListener(view -> {
-            startActivity(new Intent(this, signin.class));
+//            startActivity(new Intent(this, signin.class));
+            finish();
         });
     }
 

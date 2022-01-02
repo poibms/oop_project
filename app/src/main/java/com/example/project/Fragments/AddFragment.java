@@ -72,11 +72,9 @@ public class AddFragment extends Fragment {
         addTripBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                boolean check = checkInputs();
                 try {
                     bindingValues();
                     Trip trip = new Trip(from, to, startDate, startTime, transportType,capacity, price);
-                    TripDB.createTrip(db, trip);
                     if(TripDB.createTrip(db, trip) != -1) {
                         clearInputs();
                         Toast.makeText(getContext(), "Trip was created successfully", Toast.LENGTH_LONG).show();

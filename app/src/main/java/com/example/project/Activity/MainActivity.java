@@ -26,11 +26,6 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
     public BottomNavigationView navigationView;
 
-//    SharedPreferences sharedPreferences;
-//    private static final String SHARED_PREF_NAME = "userInfo";
-//    private static final String KEY_ID = "userId";
-//    private static final String KEY_EMAIL = "LOGIN";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
         navigationView = findViewById(R.id.bottom_navigation);
 
-//        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
         navigationView.setOnNavigationItemSelectedListener(navListener);
 

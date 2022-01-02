@@ -5,33 +5,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Base64;
 import android.widget.Toast;
 
 import com.example.project.Activity.MainActivity;
 import com.example.project.Model.User;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.security.SecureRandom;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 
 public class UserDB {
     private static final String USER_TABLE = "USER";
 
     public static long signUp(SQLiteDatabase db, User user) {
-
-//        db.execSQL("drop trigger if exists trgr_SIGNUP_USR");
-//
-//        String createTrigger =
-//                "create trigger if not exists trgr_SIGNUP_USR before insert on " + USER_TABLE
-//                        + " begin"
-//                        + " select case"
-//                        + " (select EMAIL"
-//                        + " from " + USER_TABLE
-//                        + " where EMAIL = " + user.getEmail() + ")"
-//                        + " then"
-//                        + " raise(abort, 'there must be less than 6 students in the group')"
-//                        + " end;"
-//                        + " end;";
-//
-//        db.execSQL(createTrigger);
 
         ContentValues values = new ContentValues();
         values.put("LOGIN", user.getLogin());
@@ -41,14 +31,9 @@ public class UserDB {
         return db.insertOrThrow(USER_TABLE, null, values);
     }
 
-    private byte[] getSalt() {
-        SecureRandom random = new SecureRandom();
-        byte[]salt = new byte[16];
-        random.nextBytes(salt);
-        return salt;
-    }
 
-    public static int signIn(SQLiteDatabase db, String email,String password, Context ctx ) {
+
+    public static int signIn(SQLiteDatabase db, String email,String password ) {
 
         Cursor query = db.rawQuery("select * from " + USER_TABLE + " where " + " EMAIL = '" + email + "';", null);
         if( query.moveToFirst() && query.getCount() != 0) {
